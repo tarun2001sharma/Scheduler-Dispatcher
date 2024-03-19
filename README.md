@@ -143,10 +143,6 @@ You must strictly adhere to this format. The program’s results will be graded 
 
 For more details on formatting and precision handling in C++, see examples in `/home/frankeh/Public/ProgExamples/Format/format.cpp` as discussed in extra sessions.
 
-## Contributing
-
-Contributions to enhance the simulation's functionality or extend its scheduling algorithms portfolio are welcome. Please adhere to the project's code style and contribute via pull requests.
-
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
