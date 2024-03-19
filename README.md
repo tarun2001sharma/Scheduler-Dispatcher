@@ -16,6 +16,7 @@ The simulation employs a Discrete Event Simulation (DES) system, focusing on a s
 - **PRIO (Priority Scheduling)**
 - **PREPRIO (Preemptive Priority Scheduling)**
 
+![Scheduler/Dispatcher Simulation Architecture](/mnt/data/Screenshot 2024-03-19 at 02.38.42.png)
 ## Detailed Technical Description
 
 ### Core Design Principles
@@ -75,6 +76,71 @@ make
 ```
 
 Replace `[algorithm]` with the scheduling algorithm code (e.g., `F` for FCFS), `inputfile` with the path to the process specification file, and `randfile` with the path to the random numbers file.
+
+
+## Execution and Invocation Format:
+
+Your program should follow the following invocation:
+```
+<program> [-v] [-t] [-e] [-p] [-s<schedspec>] inputfile randfile
+```
+Options should be able to be passed in any order. This is the way a good programmer will do that. See [GNU libc manual on getopt](http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html) for examples.
+
+Test input files and the sample file with random numbers are available as a NYU brightspace attachment.
+
+The scheduler specification is “–s [ FLS | R<num> | P<num>[:<maxprio>] | E<num>[:<maxprios>] ]”, where F=FCFS, L=LCFS, S=SRTF and R10 and P10 are RR and PRIO with quantum 10. (e.g., “./sched –sR10”) and E10 is the preemptive prio scheduler. Supporting this parameter is required and the quantum is a positive number. In addition, the number of priority levels is specified in PRIO and PREPRIO with an optional “:num” addition. E.g., “-sE10:5” implies quantum=10 and numprios=5. If the addition is omitted then maxprios=4 by default.
+
+The –v option stands for verbose and should print out some tracing information that allows one to follow the state transition. Though this is not mandatory, it is highly suggested you build this into your program to allow you to follow the state transition and to verify the program. I include samples from my tracing for some inputs (not all). Matching my format will allow you to run diffs and identify why results and where the results don’t match up. You can always use `/home/frankeh/Public/lab2/sched` to create your own detailed output for not provided samples. Also use `-t` and `-e` and `-p` options for more details on eventQ, runQ, and preemption. “-t” traces the event execution. “-e” shows the eventQ before and after an event is inserted and “-p” shows for the E scheduler the decision when an unblocked process attempts to preempt a running process. Remember two conditions must be met (higher prio and pending event of the currently running process is in the future, not now). Note options -t -e -p -v do NOT have to be implemented.
+
+### Please ensure the following:
+
+- (a) The input and randfile must accept any path and should not assume a specific location relative to the code or executable.
+- (b) All output must go to the console (due to the harness testing)
+- (c) All code/grading will be executed on machine `<linserv1.cims.nyu.edu>`
+
+As always, if you detect errors in the sample inputs and outputs, let me know immediately so I can verify and correct if necessary. Please refer to the input/output file number and the line number.
+
+
+## Output
+
+At the end of the program, you should print the following information, and the example outputs provide the proper expected formatting (including precision); this is necessary to automate the results checking; all required output should go to the console (stdout / cout).
+
+### a) Scheduler Information
+- Which scheduler algorithm and, in case of RR/PRIO/PREPRIO, also the quantum.
+
+### b) Per Process Information
+Printed in the order of process appearance in the input file. For each process (assume processes start with pid=0), the correct desired format is shown below:
+```
+pid: AT TC CB IO PRIO | FT TT IT CW
+```
+- **FT**: Finishing time
+- **TT**: Turnaround time (finishing time - AT)
+- **IT**: I/O Time (time in blocked state)
+- **PRIO**: Static priority assigned to the process (note this only has meaning in PRIO/PREPRIO case)
+- **CW**: CPU Waiting time (time in Ready state)
+
+### c) Summary Information
+Finally, print a summary for the simulation:
+- Finishing time of the last event (i.e., the last process finished execution)
+- CPU utilization (i.e., percentage (0.0 – 100.0) of time at least one process is running)
+- IO utilization (i.e., percentage (0.0 – 100.0) of time at least one process is performing IO)
+- Average turnaround time among processes
+- Average CPU waiting time among processes
+- Throughput of number processes per 100 time units
+
+CPU / IO utilizations and throughput are computed from time=0 till the finishing time.
+
+#### Example:
+```
+FCFS
+0000: 0 100 10 10 2 | 223 223 123 0
+0001: 500 100 20 10 1 | 638 138 38 0
+SUM: 638 31.35 25.24 180.50 0.00 0.313
+```
+
+You must strictly adhere to this format. The program’s results will be graded by a testing harness that uses “diff –b”. In particular, you must pay attention to separate the tokens and to the rounding.
+
+For more details on formatting and precision handling in C++, see examples in `/home/frankeh/Public/ProgExamples/Format/format.cpp` as discussed in extra sessions.
 
 ## Contributing
 
