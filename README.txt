@@ -1,73 +1,85 @@
-Some tips on how to run this.
 
-#Untar the reference output
-# created with running ./runit.sh refout_vp sched
-tar -xzvf refout.tar.Z 
+# Scheduler / Dispatcher Simulation
 
-#Optional Untar the verbose reference output
-# created with running ./runit.sh refout_vp sched -v -p
-tar -xzvf refout_vp.tar.Z
+This repository contains a simulation designed for exploring various scheduling policies applied to processes or threads executing within a simulated environment. Developed for the Programming Assignment #2 of Class CSCI-GA.2250-001 Spring 2024, guided by Professor Hubertus Franke, it aims to provide a comprehensive understanding of scheduling algorithms' impact on process management in an operating system.
 
-#write your program .. standard way of writing a program
-mkdir src
-vi sched.cpp
-make 
+## Overview
 
-# run all examples ... assuming your executable is in ../src/sched
-# make a outputdir
-mkdir outputdir
-./runit.sh outputdir ../src/sched
+The simulation employs a Discrete Event Simulation (DES) system, focusing on a single-core CPU model without hyperthreading. It intricately models the process life cycle, encompassing states from creation to completion, and simulates the effect of different scheduling algorithms on these processes.
 
-# compare outputs with reference output
-# make sure that the frefout is the first argument
-# because we are putting the LOG.txt into the outputdir
+### Supported Scheduling Algorithms:
 
-./gradeit.sh refout outputdir
+- **FCFS (First-Come, First-Served)**
+- **LCFS (Last-Come, First-Served)**
+- **SRTF (Shortest Remaining Time First)**
+- **RR (Round Robin)**
+- **PRIO (Priority Scheduling)**
+- **PREPRIO (Preemptive Priority Scheduling)**
 
-You might get something like this.
+## Detailed Technical Description
 
-frankeh@NYU2 > ./runit.sh ./studx ../src/mysched     # creates your outputs
+### Core Design Principles
 
-frankeh@NYU2 > ./gradeit.sh ./refout ./studx
-in    F    L    S   R2   R5   P2   P5:3 E2:5 E4
-00    1    1    0    1    1    1    1    1    1
-01    1    1    1    1    1    1    1    1    1
-02    1    1    1    1    1    1    1    1    1
-03    1    1    1    1    1    1    1    1    1
-04    1    1    1    1    1    1    1    1    1
-05    1    1    1    1    1    1    1    1    1
-06    1    1    1    1    1    1    1    1    1
-07    1    1    1    1    0    1    0    0    1
+#### Discrete Event Simulation (DES)
 
-SUM   8    8    7    8    7    8    7    7    8 
-68 out of 72 correct
+At the core of the scheduler/dispatcher simulation lies the DES methodology, which abstractly represents the system's operation through a chronological sequence of events. Each event signifies a state transition, offering a precise and clear-cut simulation of process scheduling and execution.
 
-You have to inspect what goes wrong .. you see that input0 algo "S" failed
-Go to studx/LOG.txt which will only show the command and SUM lines.
-The SUM might be correct, but there are differences. Execute the diff command
-listed manually and you will see all differences
+#### Process Model
 
-frankeh@NYU2 > diff ./refout/out_0_S ./studx/out_0_S
-2,4c2,4
-< 0000:    0  100   10   10 2 |   201   201   101     0
-< 0001:  500  100   20   10 4 |   627   127    27     0
-< SUM: 627 31.90 20.41 164.00 0.00 0.319
----
-> 0000:    0  100   10   10 2 |   209   201   101     0
-> 0001:  500  100   20   10 4 |   622   127    27     0
-> SUM: 627 31.90 20.41 164.00 0.00 0.301
+The simulation defines processes with attributes such as Arrival Time (AT), Total CPU Time (TC), CPU Burst (CB), and IO Burst (IO). It simulates single-threaded processes in a non-preemptive or preemptive manner, depending on the scheduling algorithm applied, closely mirroring real-world operating system behavior.
 
+#### Scheduling Algorithms
 
-In that case you need to inspect the outputs and determine why you get
-different results.
-You might want to run with -v option and compare in detail one particular
-output and go from there. The -v references are provided in ./refout_v
+Implemented algorithms range from basic to advanced, including FCFS, LCFS, SRTF, RR, PRIO, and PREPRIO, each demonstrating unique characteristics and impacts on process scheduling. The simulation provides insights into the algorithms' operational intricacies and their implications on system performance.
 
-frankeh@NYU2 > ./runit.sh ./studx ./src/mysched -v  # creates your outputs with -v option
+#### Event Management System
 
+A priority queue-based event management system orchestrates the simulation, ensuring chronological processing of events. This system facilitates an in-depth analysis of the scheduling algorithms by tracking process state transitions and scheduling decisions.
 
-Finally: 
+### Advanced Computational Concepts
 
-Please go back to the first class and the projects /home/frankeh/Public/ProgExamples/Format
-to see how to properly format C and C++ output to avoid rounding errors etc.
+The simulation integrates advanced computer science and programming concepts, including:
 
+- **Polymorphism and Object-Oriented Design**: Employing abstract classes and interfaces to define a common scheduler framework, enabling the seamless integration and comparison of different scheduling algorithms.
+- **Priority Queue for Event Management**: Utilizing data structures to manage events efficiently, ensuring that process transitions and scheduling decisions adhere to the simulation timeline.
+- **Atomic Operations for Thread Safety**: In scenarios where multithreading might be explored, atomic operations ensure data integrity without compromising performance.
+- **Algorithmic Complexity Considerations**: Optimizing data structures and algorithms to minimize computational complexity, enhancing the simulation's efficiency and scalability.
+
+## Installation and Usage
+
+### Prerequisites
+
+- GNU Compiler Collection (GCC) or compatible C++ compiler
+- GNU Make for building the project
+
+### Building the Simulation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+```
+
+2. Navigate to the project directory:
+```bash
+cd your-repo-name
+```
+
+3. Compile the project:
+```bash
+make
+```
+
+4. Run the simulation with the desired scheduling algorithm and input files:
+```bash
+./sched -s[algorithm] inputfile randfile
+```
+
+Replace `[algorithm]` with the scheduling algorithm code (e.g., `F` for FCFS), `inputfile` with the path to the process specification file, and `randfile` with the path to the random numbers file.
+
+## Contributing
+
+Contributions to enhance the simulation's functionality or extend its scheduling algorithms portfolio are welcome. Please adhere to the project's code style and contribute via pull requests.
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
