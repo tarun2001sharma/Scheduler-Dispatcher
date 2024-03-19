@@ -139,10 +139,6 @@ FCFS
 SUM: 638 31.35 25.24 180.50 0.00 0.313
 ```
 
-You must strictly adhere to this format. The program’s results will be graded by a testing harness that uses “diff –b”. In particular, you must pay attention to separate the tokens and to the rounding.
-
-For more details on formatting and precision handling in C++, see examples in `/home/frankeh/Public/ProgExamples/Format/format.cpp` as discussed in extra sessions.
-
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
