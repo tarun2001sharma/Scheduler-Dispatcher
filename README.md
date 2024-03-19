@@ -7,8 +7,7 @@ This repository contains a simulation designed for exploring various scheduling 
 
 The simulation employs a Discrete Event Simulation (DES) system, focusing on a single-core CPU model without hyperthreading. It intricately models the process life cycle, encompassing states from creation to completion, and simulates the effect of different scheduling algorithms on these processes.
 
-![image](https://github.com/tarun2001sharma/Scheduler-Dispatcher/assets/59308544/a8718f55-a479-446f-890a-747b5f9feea9)
-
+![image](https://github.com/tarun2001sharma/Scheduler-Dispatcher/assets/59308544/72a27242-2e24-4d66-a479-c2a8b471c129)
 
 ### Supported Scheduling Algorithms:
 
@@ -19,9 +18,9 @@ The simulation employs a Discrete Event Simulation (DES) system, focusing on a s
 - **PRIO (Priority Scheduling)**
 - **PREPRIO (Preemptive Priority Scheduling)**
 
-![Scheduler/Dispatcher Simulation Architecture](/mnt/data/Screenshot 2024-03-19 at 02.38.42.png)
 ## Detailed Technical Description
 
+![image](https://github.com/tarun2001sharma/Scheduler-Dispatcher/assets/59308544/a8718f55-a479-446f-890a-747b5f9feea9)
 ### Core Design Principles
 
 #### Discrete Event Simulation (DES)
