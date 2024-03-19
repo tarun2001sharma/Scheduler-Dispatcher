@@ -7,6 +7,9 @@ This repository contains a simulation designed for exploring various scheduling 
 
 The simulation employs a Discrete Event Simulation (DES) system, focusing on a single-core CPU model without hyperthreading. It intricately models the process life cycle, encompassing states from creation to completion, and simulates the effect of different scheduling algorithms on these processes.
 
+![image](https://github.com/tarun2001sharma/Scheduler-Dispatcher/assets/59308544/a8718f55-a479-446f-890a-747b5f9feea9)
+
+
 ### Supported Scheduling Algorithms:
 
 - **FCFS (First-Come, First-Served)**
@@ -86,11 +89,9 @@ Your program should follow the following invocation:
 ```
 Options should be able to be passed in any order. This is the way a good programmer will do that. See [GNU libc manual on getopt](http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html) for examples.
 
-Test input files and the sample file with random numbers are available as a NYU brightspace attachment.
+Test input files and the sample file with random numbers.
 
 The scheduler specification is “–s [ FLS | R<num> | P<num>[:<maxprio>] | E<num>[:<maxprios>] ]”, where F=FCFS, L=LCFS, S=SRTF and R10 and P10 are RR and PRIO with quantum 10. (e.g., “./sched –sR10”) and E10 is the preemptive prio scheduler. Supporting this parameter is required and the quantum is a positive number. In addition, the number of priority levels is specified in PRIO and PREPRIO with an optional “:num” addition. E.g., “-sE10:5” implies quantum=10 and numprios=5. If the addition is omitted then maxprios=4 by default.
-
-The –v option stands for verbose and should print out some tracing information that allows one to follow the state transition. Though this is not mandatory, it is highly suggested you build this into your program to allow you to follow the state transition and to verify the program. I include samples from my tracing for some inputs (not all). Matching my format will allow you to run diffs and identify why results and where the results don’t match up. You can always use `/home/frankeh/Public/lab2/sched` to create your own detailed output for not provided samples. Also use `-t` and `-e` and `-p` options for more details on eventQ, runQ, and preemption. “-t” traces the event execution. “-e” shows the eventQ before and after an event is inserted and “-p” shows for the E scheduler the decision when an unblocked process attempts to preempt a running process. Remember two conditions must be met (higher prio and pending event of the currently running process is in the future, not now). Note options -t -e -p -v do NOT have to be implemented.
 
 ### Please ensure the following:
 
